@@ -8,6 +8,7 @@ __pycache__/
 # Environment
 .env
 *.env
+.env.*
 
 # Django media / static (collectstatic時に生成)
 media/
