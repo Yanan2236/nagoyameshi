@@ -1,0 +1,10 @@
+services:
+  web:
+    build: .
+    container_name: nagoyameshi_web
+    volumes:
+      - .:/app
+    ports:
+      - "8001:8000"
+    stdin_open: true
+    tty: true

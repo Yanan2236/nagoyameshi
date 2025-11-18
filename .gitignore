@@ -1,0 +1,29 @@
+# === Python / Django ===
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+
+# Environment
+.env
+*.env
+
+# Django media / static (collectstatic時に生成)
+media/
+staticfiles/
+
+# === VSCode / Editor ===
+.vscode/
+*.code-workspace
+.idea/
+
+# === Docker (不要な生成ファイル) ===
+*.pid
+*.pid.lock
+*.sock
+*.log
+
+# === System / OS ===
+.DS_Store
+Thumbs.db
