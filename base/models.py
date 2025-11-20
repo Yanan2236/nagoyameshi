@@ -4,12 +4,20 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils import timezone
 
 
+class Weekday(models.IntegerChoices):
+    MON = 0, "Mon"
+    TUE = 1, "Tue"
+    WED = 2, "Wed"
+    THU = 3, "Thu"
+    FRI = 4, "Fri"
+    SAT = 5, "Sat"
+    SUN = 6, "Sun"
+
 class Restaurant(models.Model):
     name = models.CharField(max_length=100)
-    description = models.TextField()
-    address = models.CharField(max_length=255)
-    phone_number = models.CharField(max_length=20)
-    opening_hours = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    address = models.CharField(max_length=255, blank=True)
+    phone_number = models.CharField(max_length=20, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     category = models.ManyToManyField('Category', related_name='restaurants')
@@ -18,6 +26,13 @@ class Restaurant(models.Model):
         return self.name
     
     
+class OpeningHour(models.Model):
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name="opening_hours")
+    weekday = models.IntegerField(choices=Weekday.choices)
+    open_time = models.TimeField()
+    close_time = models.TimeField()
+        
+        
 class Category(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField(blank=True, null=True)
