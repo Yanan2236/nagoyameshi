@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ object.name }} | 食べログ風{% endblock %}
+
+{% block main %}
+<div class="restaurant-detail">
+    <h2>{{ object.name }}</h2>
+
+    <p class="address">{{ object.address }}</p>
+
+    <p class="rating">
+        総合評価: {{ object.average_rating|default:"-" }} / 5
+    </p>
+
+    <p class="description">
+        {{ object.description|linebreaksbr }}
+    </p>
+
+    <hr>
+
+    <h3>レビュー</h3>
+
+    <div class="review-list">
+        {% for review in object.review_set.all %}
+            <div class="review-item">
+                <p>
+                    <strong>{{ review.user.username }}</strong>
+                    <span>({{ review.rating }} / 5)</span>
+                </p>
+                <p>{{ review.comment|linebreaksbr }}</p>
+            </div>
+        {% empty %}
+            <p>レビューはまだありません。</p>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

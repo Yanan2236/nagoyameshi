@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{% block title %}NAGOMESHI{% endblock %}</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <!-- ====== ヘッダー ====== -->
+    <header class="site-header">
+        <div class="container header-inner">
+            <h1 class="logo">
+                <a href="/">NAGOMESHI</a>
+            </h1>
+
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="{% url 'restaurant_list' %}">レストラン一覧</a></li>
+                    <li><a href="#">ランキング</a></li>
+                    <li><a href="#">マイページ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+
+    <!-- ====== メインコンテンツ ====== -->
+    <main class="container">
+        {% block main %}
+        {% endblock %}
+    </main>
+
+
+    <!-- ====== フッター ====== -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2025 NAGOMESHI</p>
+        </div>
+    </footer>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>
