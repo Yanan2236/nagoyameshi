@@ -3,5 +3,5 @@ from base.models import Restaurant
 
 class RestaurantListView(ListView):
     model = Restaurant
-    template_name = "restaurant_list.html"
+    template_name = "base/restaurant/list.html"
     paginate_by = 10

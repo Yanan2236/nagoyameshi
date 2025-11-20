@@ -3,4 +3,4 @@ from base.models import Restaurant
 
 class RestaurantDetailView(DetailView):
     model = Restaurant
-    template_name = "restaurant_detail.html"
+    template_name = "base/restaurant/detail.html"
