@@ -1,36 +1,48 @@
 from django.db import models
 from django.conf import settings
-from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils import timezone
 
 
-class Weekday(models.IntegerChoices):
-    MON = 0, "Mon"
-    TUE = 1, "Tue"
-    WED = 2, "Wed"
-    THU = 3, "Thu"
-    FRI = 4, "Fri"
-    SAT = 5, "Sat"
-    SUN = 6, "Sun"
+class Weekday(models.TextChoices):
+    MON = "mon", "Mon"
+    TUE = "tue", "Tue"
+    WED = "wed", "Wed"
+    THU = "thu", "Thu"
+    FRI = "fri", "Fri"
+    SAT = "sat", "Sat"
+    SUN = "sun", "Sun"
     
 
-class Ward(models.IntegerChoices):
-    CHIKUSA = 1, "千種区"
-    HIGASHI = 2, "東区"
-    KITA = 3, "北区"
-    NISHI = 4, "西区"
-    NAKAMURA = 5, "中村区"
-    NAKA = 6, "中区"
-    SHOWA = 7, "昭和区"
-    MIZUHO = 8, "瑞穂区"
-    ATSUTA = 9, "熱田区"
-    NAKAGAWA = 10, "中川区"
-    MINATO = 11, "港区"
-    MINAMI = 12, "南区"
-    MORIYAMA = 13, "守山区"
-    MEITO = 14, "名東区"
-    TEMPAKU = 15, "天白区"
-    MIDORI = 16, "緑区"
+class Ward(models.TextChoices):
+    CHIKUSA   = "chikusa", "千種区"
+    HIGASHI   = "higashi", "東区"
+    KITA      = "kita", "北区"
+    NISHI     = "nishi", "西区"
+    NAKAMURA  = "nakamura", "中村区"
+    NAKA      = "naka", "中区"
+    SHOWA     = "showa", "昭和区"
+    MIZUHO    = "mizuho", "瑞穂区"
+    ATSUTA    = "atsuta", "熱田区"
+    NAKAGAWA  = "nakagawa", "中川区"
+    MINATO    = "minato", "港区"
+    MINAMI    = "minami", "南区"
+    MORIYAMA  = "moriyama", "守山区"
+    MEITO     = "meito", "名東区"
+    TEMPAKU   = "tempaku", "天白区"
+    MIDORI    = "midori", "緑区"
+    
+    
+class Genre(models.TextChoices):
+    OGURA_TOAST      = "ogura_toast", "小倉トースト"
+    DOTE_NI          = "dote_ni", "どて煮"
+    TEBASAKI         = "tebasaki", "手羽先"
+    TENMUSU          = "tenmusu", "天むす"
+    TAIWAN_RAMEN     = "taiwan_ramen", "台湾ラーメン"
+    ANKAKE_SPAGHETTI = "ankake_spaghetti", "あんかけスパゲッティ"
+    KISHIMEN         = "kishimen", "きしめん"
+    MISO_NIKOMI      = "miso_nikomi_udon", "味噌煮込みうどん"
+    MISO_KATSU       = "miso_katsu", "味噌カツ"
+    HITSUMABUSHI     = "hitsumabushi", "ひつまぶし"
     
     
 class Rating(models.IntegerChoices):
@@ -44,12 +56,12 @@ class Rating(models.IntegerChoices):
 class Restaurant(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
-    ward = models.PositiveSmallIntegerField(choices=Ward.choices)
+    ward = models.CharField(max_length=20, choices=Ward.choices)
     address = models.CharField(max_length=255, blank=True)
     phone_number = models.CharField(max_length=20, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    category = models.ManyToManyField('Category', related_name='restaurants')
+    genre = models.CharField(max_length=30, choices=Genre.choices)
 
     def __str__(self):
         return self.name
@@ -60,15 +72,7 @@ class OpeningHour(models.Model):
     weekday = models.IntegerField(choices=Weekday.choices)
     open_time = models.TimeField()
     close_time = models.TimeField()
-        
-        
-class Category(models.Model):
-    name = models.CharField(max_length=50)
-    description = models.TextField(blank=True, null=True)
 
-    def __str__(self):
-        return self.name
-    
     
 class Review(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviews')
