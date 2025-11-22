@@ -32,25 +32,19 @@ class Ward(models.TextChoices):
     MIDORI    = "midori", "緑区"
     
     
-class Genre(models.TextChoices):
-    OGURA_TOAST      = "ogura_toast", "小倉トースト"
-    DOTE_NI          = "dote_ni", "どて煮"
-    TEBASAKI         = "tebasaki", "手羽先"
-    TENMUSU          = "tenmusu", "天むす"
-    TAIWAN_RAMEN     = "taiwan_ramen", "台湾ラーメン"
-    ANKAKE_SPAGHETTI = "ankake_spaghetti", "あんかけスパゲッティ"
-    KISHIMEN         = "kishimen", "きしめん"
-    MISO_NIKOMI      = "miso_nikomi_udon", "味噌煮込みうどん"
-    MISO_KATSU       = "miso_katsu", "味噌カツ"
-    HITSUMABUSHI     = "hitsumabushi", "ひつまぶし"
-    
-    
 class Rating(models.IntegerChoices):
     ONE = 1, "★☆☆☆☆"
     TWO = 2, "★★☆☆☆"
     THREE = 3, "★★★☆☆"
     FOUR = 4, "★★★★☆"
     FIVE = 5, "★★★★★"
+    
+    
+class Genre(models.Model):
+    name = models.CharField(max_length=20)
+    
+    def __str__(self):
+        return self.name
     
 
 class Restaurant(models.Model):
@@ -61,7 +55,7 @@ class Restaurant(models.Model):
     phone_number = models.CharField(max_length=20, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    genre = models.CharField(max_length=30, choices=Genre.choices)
+    genre = models.ManyToManyField(Genre)
 
     def __str__(self):
         return self.name
