@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<form action="{% url 'restaurant_list' %}" method="get">
+    {{ form.ward }}
+    {{ form.genre }}
+    <button type="submit">検索</button>
+</form>
+{% endblock %}
