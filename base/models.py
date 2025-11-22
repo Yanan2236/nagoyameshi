@@ -12,10 +12,39 @@ class Weekday(models.IntegerChoices):
     FRI = 4, "Fri"
     SAT = 5, "Sat"
     SUN = 6, "Sun"
+    
+
+class Ward(models.IntegerChoices):
+    CHIKUSA = 1, "千種区"
+    HIGASHI = 2, "東区"
+    KITA = 3, "北区"
+    NISHI = 4, "西区"
+    NAKAMURA = 5, "中村区"
+    NAKA = 6, "中区"
+    SHOWA = 7, "昭和区"
+    MIZUHO = 8, "瑞穂区"
+    ATSUTA = 9, "熱田区"
+    NAKAGAWA = 10, "中川区"
+    MINATO = 11, "港区"
+    MINAMI = 12, "南区"
+    MORIYAMA = 13, "守山区"
+    MEITO = 14, "名東区"
+    TEMPAKU = 15, "天白区"
+    MIDORI = 16, "緑区"
+    
+    
+class Rating(models.IntegerChoices):
+    ONE = 1, "★☆☆☆☆"
+    TWO = 2, "★★☆☆☆"
+    THREE = 3, "★★★☆☆"
+    FOUR = 4, "★★★★☆"
+    FIVE = 5, "★★★★★"
+    
 
 class Restaurant(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
+    ward = models.PositiveSmallIntegerField(choices=Ward.choices)
     address = models.CharField(max_length=255, blank=True)
     phone_number = models.CharField(max_length=20, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -44,7 +73,7 @@ class Category(models.Model):
 class Review(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviews')
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='reviews')
-    rating = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    rating = models.PositiveSmallIntegerField(choices=Rating.choices)
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
