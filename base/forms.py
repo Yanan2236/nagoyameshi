@@ -1,10 +1,10 @@
 from django import forms
-from base.models import Ward, Genre
+from base.models import Spot, Genre
 
 
 class SearchForm(forms.Form):
-    ward = forms.ChoiceField(
-        choices=Ward.choices,
+    spot = forms.ModelChoiceField(
+        queryset=Spot.objects.all(),
         required=False,
         widget=forms.Select(attrs={"class": "search-select"})
     )
