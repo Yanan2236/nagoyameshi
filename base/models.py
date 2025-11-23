@@ -46,11 +46,29 @@ class Genre(models.Model):
     def __str__(self):
         return self.name
     
+    
+class Spot(models.Model):
+    name = models.CharField(max_length=50)
+    ward = models.CharField(max_length=20, choices=Ward.choices)
+    
+    def __str__(self):
+        return self.name
+    
+    
+class SpotSubArea(models.Model):
+    spot = models.ForeignKey(Spot, on_delete=models.CASCADE, related_name="spot_sub_area")
+    name = models.CharField(max_length=30)
+    ward = models.CharField(max_length=20, choices=Ward.choices)
+    
+    def __str__(self):
+        return self.name
+
 
 class Restaurant(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     ward = models.CharField(max_length=20, choices=Ward.choices)
+    sub_area = models.ForeignKey(SpotSubArea, on_delete=models.CASCADE, related_name="restaurant")
     address = models.CharField(max_length=255, blank=True)
     phone_number = models.CharField(max_length=20, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
