@@ -1,0 +1,27 @@
+.site-footer {
+    background-color: #222;
+    color: #ccc;
+    padding: var(--spacing-xl) 0;
+    font-size: 14px;
+}
+
+.footer-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-lg);
+}
+
+.footer-links {
+    display: flex;
+    gap: var(--spacing-lg);
+}
+
+.footer-links a:hover {
+    color: var(--color-bg-white);
+}
+
+.copyright {
+    color: #666;
+    font-size: 12px;
+}
