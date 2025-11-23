@@ -1,29 +1,47 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>{% block title %}NAGOMESHI{% endblock %}</title>
+    <title>{% block title %}NAGOMESHI | 名古屋のグルメ情報{% endblock %}</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/reset.css' %}">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
-</head>
+    <link rel="stylesheet" href="{% static 'css/components/search_form.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/map.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/footer.css' %}">
+
+    {% block extra_css %}{% endblock %}
 
 <body>
     <!-- ====== ヘッダー ====== -->
     <header class="site-header">
         <div class="container header-inner">
             <h1 class="logo">
-                <a href="/">NAGOMESHI</a>
+                <a href="/">
+                    <span>🍤</span> NAGOYAMESHI
+                </a>
             </h1>
 
+
             <nav class="main-nav">
-                <ul>
-                    <li><a href="{% url 'restaurant_list' %}">レストラン一覧</a></li>
-                    <li><a href="#">ランキング</a></li>
-                    <li><a href="#">マイページ</a></li>
+                <ul class="nav-list">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item"><a href="#">マイページ</a></li>
+                    <li class="nav-item"><a href="#">お気に入り</a></li>
+                    <li class="nav-item"><a href="#" class="btn-primary">ログアウト</a></li>
+                    {% else %}
+                    <li class="nav-item"><a href="#">新規登録</a></li>
+                    <li class="nav-item"><a href="#" class="btn-primary">ログイン</a></li>
+                    {% endif %}
                 </ul>
             </nav>
         </div>
@@ -31,19 +49,29 @@
 
 
     <!-- ====== メインコンテンツ ====== -->
-    <main class="container">
-        {% block main %}
-        {% endblock %}
+    <main>
+        <div class="container">
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% block main %}
+            {% endblock %}
+        </div>
     </main>
 
 
+
     <!-- ====== フッター ====== -->
-    <footer class="site-footer">
-        <div class="container">
-            <p>&copy; 2025 NAGOMESHI</p>
-        </div>
-    </footer>
+    {% include "components/footer.html" %}
 
     {% block scripts %}{% endblock %}
 </body>
+
 </html>
