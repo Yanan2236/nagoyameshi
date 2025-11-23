@@ -56,12 +56,17 @@ class Spot(models.Model):
     
     
 class SpotSubArea(models.Model):
-    spot = models.ForeignKey(Spot, on_delete=models.CASCADE, related_name="spot_sub_area")
+    spot = models.ForeignKey(Spot, on_delete=models.CASCADE, related_name="subareas")
     name = models.CharField(max_length=30)
     ward = models.CharField(max_length=20, choices=Ward.choices)
     
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=["spot", "name", "ward"], name="unique_spot_subarea")
+        ]
+    
     def __str__(self):
-        return self.name
+        return f"{self.name}（{self.get_ward_display()}）"
 
 
 class Restaurant(models.Model):

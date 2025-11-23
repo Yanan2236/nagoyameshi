@@ -14,7 +14,9 @@ class RestaurantAdmin(admin.ModelAdmin):
 
 class SpotSubAreaInline(admin.TabularInline):
     model = SpotSubArea
+    fields = ("name", "ward")
     extra = 1
+    ordering = ("ward", "name")
     
 
 class SpotAdmin(admin.ModelAdmin):
