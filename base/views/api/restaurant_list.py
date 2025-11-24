@@ -37,4 +37,3 @@ def restaurant_list_api(request):
     ]
     
     return JsonResponse({"results": data})
-            

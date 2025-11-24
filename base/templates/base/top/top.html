@@ -1,7 +1,28 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/components/restaurant_card.css' %}">
+{% endblock %}
 
 {% block main %}
 
 {% include 'components/search_form.html' %}
 
+<div class="results-container">
+    {% if restaurants %}
+        <ul class="results-list">
+            {% for restaurant in restaurants %}
+                {% include 'components/restaurant_card.html' with restaurant=restaurant %}
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>該当するレストランが見つかりませんでした。</p>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/components/search_form.js' %}"></script>
 {% endblock %}

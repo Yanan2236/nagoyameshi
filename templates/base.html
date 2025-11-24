@@ -16,10 +16,10 @@
     <link rel="stylesheet" href="{% static 'css/reset.css' %}">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/search_form.css' %}">
-    <link rel="stylesheet" href="{% static 'css/components/map.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/footer.css' %}">
 
     {% block extra_css %}{% endblock %}
+</head>
 
 <body>
     <!-- ====== ヘッダー ====== -->
@@ -66,7 +66,7 @@
         </div>
     </main>
 
-
+    {% block extra_js %}{% endblock %}
 
     <!-- ====== フッター ====== -->
     {% include "components/footer.html" %}
