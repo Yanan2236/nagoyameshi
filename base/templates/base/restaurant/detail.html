@@ -1,36 +1,136 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+{% load static %}
 
-{% block title %}{{ object.name }} | 食べログ風{% endblock %}
+{% block title %}{{ restaurant.name }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pages/detail.css' %}">
+{% endblock %}
 
 {% block main %}
 <div class="restaurant-detail">
-    <h2>{{ object.name }}</h2>
 
-    <p class="address">{{ object.address }}</p>
+    <div class="detail-header">
+        <div class="detail-main">
+            <h1 class="restaurant-name">{{ restaurant.name }}</h1>
 
-    <p class="rating">
-        総合評価: {{ object.average_rating|default:"-" }} / 5
-    </p>
+            <p class="restaurant-meta">
+                <span class="meta-ward">
+                    {{ restaurant.get_ward_display }}
+                </span>
+                {% if restaurant.sub_area %}
+                    <span class="meta-separator">/</span>
+                    <span class="meta-subarea">
+                        {{ restaurant.sub_area.name }}
+                    </span>
+                {% endif %}
+            </p>
 
-    <p class="description">
-        {{ object.description|linebreaksbr }}
-    </p>
+            {% if restaurant.address %}
+                <p class="restaurant-address">
+                    {{ restaurant.address }}
+                </p>
+            {% endif %}
 
-    <hr>
+            {% if restaurant.phone_number %}
+                <p class="restaurant-phone">
+                    TEL: {{ restaurant.phone_number }}
+                </p>
+            {% endif %}
 
-    <h3>レビュー</h3>
+            {% if genres %}
+                <ul class="genre-list">
+                    {% for g in genres %}
+                        <li class="genre-pill">{{ g.name }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <div class="favorite-block">
+                {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'toggle_favorite' restaurant.pk %}">
+                        {% csrf_token %}
+                        {% if is_favorited %}
+                            <button type="submit" class="btn btn-ghost">
+                                ★ お気に入り解除
+                            </button>
+                        {% else %}
+                            <button type="submit" class="btn btn-primary">
+                                ☆ お気に入りに追加
+                            </button>
+                        {% endif %}
+                    </form>
+                {% else %}
+                    <a href="{% url 'account_login' %}?next={{ request.path }}"
+                       class="btn btn-primary">
+                        ログインしてお気に入り登録
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if restaurant.image %}
+            <div class="restaurant-image">
+                <img src="{{ restaurant.image.url }}"
+                     alt="{{ restaurant.name }}">
+            </div>
+        {% endif %}
+    </div>
+
+    {% if restaurant.description %}
+        <div class="restaurant-description">
+            {{ restaurant.description|linebreaksbr }}
+        </div>
+    {% endif %}
+
+    <div class="detail-divider"></div>
+
+    <div class="detail-review-header">
+        <h2>レビュー</h2>
+
+        <div class="review-actions">
+            {% if user.is_authenticated %}
+                {% if user_review %}
+                    <a href="{% url 'restaurant_review_update' review_pk=user_review.pk %}"
+                       class="btn btn-ghost">
+                        レビューを編集
+                    </a>
+                    <a href="{% url 'restaurant_review_delete' review_pk=user_review.pk %}"
+                       class="btn btn-danger">
+                        レビューを削除
+                    </a>
+                {% else %}
+                    <a href="{% url 'restaurant_review_create' pk=restaurant.pk %}"
+                       class="btn btn-primary">
+                        レビューを書く
+                    </a>
+                {% endif %}
+            {% else %}
+                <a href="{% url 'account_login' %}?next={{ request.path }}"
+                   class="btn btn-primary">
+                    ログインしてレビューを書く
+                </a>
+            {% endif %}
+        </div>
+    </div>
 
     <div class="review-list">
-        {% for review in object.review_set.all %}
-            <div class="review-item">
-                <p>
-                    <strong>{{ review.user.username }}</strong>
-                    <span>({{ review.rating }} / 5)</span>
+        {% for review in reviews %}
+            <article class="review-item">
+                <header class="review-header">
+                    <strong class="review-user">
+                        {{ review.user.username|default:review.user.email }}
+                    </strong>
+                    <span class="review-rating">
+                        {{ review.rating }} / 5
+                    </span>
+                </header>
+                <p class="review-comment">
+                    {{ review.comment|linebreaksbr }}
                 </p>
-                <p>{{ review.comment|linebreaksbr }}</p>
-            </div>
+            </article>
         {% empty %}
-            <p>レビューはまだありません。</p>
+            <p class="review-empty">レビューはまだありません。</p>
         {% endfor %}
     </div>
 

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="auth-container">
+    <h2>ログイン</h2>
+
+    <form method="post" action="{% url 'account_login' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">ログイン</button>
+    </form>
+
+    <p>
+        <a href="{% url 'account_reset_password' %}">パスワードを忘れた？</a>
+    </p>
+
+    <p>
+        <a href="{% url 'account_signup' %}">新規登録はこちら</a>
+    </p>
+</div>
+{% endblock %}

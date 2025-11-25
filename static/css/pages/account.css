@@ -1,0 +1,14 @@
+.auth-container {
+    max-width: 480px;
+    margin: 40px auto;
+    padding: 24px;
+    background: #fff;
+    border-radius: 8px;
+}
+.auth-container h2 {
+    margin-bottom: 20px;
+}
+.auth-container button {
+    margin-top: 12px;
+    padding: 8px 16px;
+}

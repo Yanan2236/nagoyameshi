@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pages/mypage.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="container mypage-container">
+  <h2>マイページ</h2>
+
+  <section class="mypage-section">
+    <h3>アカウント</h3>
+    <p>メール：{{ user.email }}</p>
+  </section>
+
+  <section class="mypage-section">
+    <h3>お気に入り</h3>
+
+    {% if favorite_restaurants %}
+    <ul>
+      {% for fav in favorite_restaurants %}
+      <li>
+        <a href="{% url 'restaurant_detail' fav.restaurant.pk %}">
+          {{ fav.restaurant.name }}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>お気に入りはまだありません。</p>
+    {% endif %}
+  </section>
+
+  <section class="mypage-section">
+    <h3>あなたのレビュー</h3>
+
+    {% if my_reviews %}
+    <ul class="review-list">
+      {% for review in my_reviews %}
+      <li class="review-item">
+        <a href="{% url 'restaurant_detail' pk=review.restaurant.pk %}">
+          {{ review.restaurant.name }}
+        </a>
+        <span>({{ review.rating }} / 5)</span>
+        {% if review.comment %}
+        <p>{{ review.comment|linebreaksbr }}</p>
+        {% endif %}
+
+        <div class="review-actions">
+          <a href="{% url 'restaurant_review_update' review_pk=review.pk %}" class="btn-secondary">
+            編集
+          </a>
+          <a href="{% url 'restaurant_review_delete' review_pk=review.pk %}" class="btn-danger">
+            削除
+          </a>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>まだレビューを書いていません。</p>
+    {% endif %}
+  </section>
+
+</div>
+{% endblock %}

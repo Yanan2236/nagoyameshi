@@ -24,27 +24,43 @@
 <body>
     <!-- ====== ヘッダー ====== -->
     <header class="site-header">
-        <div class="container header-inner">
-            <h1 class="logo">
-                <a href="/">
-                    <span>🍤</span> NAGOYAMESHI
+    <div class="container header-inner">
+        <h1 class="logo">
+        <a href="/">
+            <span>🍤</span> NAGOYAMESHI
+        </a>
+        </h1>
+
+        <nav class="main-nav">
+        <ul class="nav-list">
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a href="{% url 'account_email' %}">
+                {{ user.email|default:user.username }} さん
                 </a>
-            </h1>
+            </li>
 
+            {# マイページ（まだ作ってないなら今は # のままでOK） #}
+            <li class="nav-item"><a href="{% url 'mypage' %}">マイページ</a></li>
 
-            <nav class="main-nav">
-                <ul class="nav-list">
-                    {% if user.is_authenticated %}
-                    <li class="nav-item"><a href="#">マイページ</a></li>
-                    <li class="nav-item"><a href="#">お気に入り</a></li>
-                    <li class="nav-item"><a href="#" class="btn-primary">ログアウト</a></li>
-                    {% else %}
-                    <li class="nav-item"><a href="#">新規登録</a></li>
-                    <li class="nav-item"><a href="#" class="btn-primary">ログイン</a></li>
-                    {% endif %}
-                </ul>
-            </nav>
-        </div>
+            {# お気に入り（まだなら # のままでOK） #}
+            <li class="nav-item"><a href="{% url 'mypage' %}">お気に入り</a></li>
+
+            {# allauthのログアウト。デフォだと確認画面に行く #}
+            <li class="nav-item">
+                <a href="{% url 'account_logout' %}" class="btn-primary">ログアウト</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a href="{% url 'account_signup' %}">新規登録</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'account_login' %}" class="btn-primary">ログイン</a>
+            </li>
+            {% endif %}
+        </ul>
+        </nav>
+    </div>
     </header>
 
 

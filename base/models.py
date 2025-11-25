@@ -76,6 +76,7 @@ class Restaurant(models.Model):
     sub_area = models.ForeignKey(SpotSubArea, on_delete=models.CASCADE, related_name="restaurant")
     address = models.CharField(max_length=255, blank=True)
     phone_number = models.CharField(max_length=20, blank=True)
+    image = models.ImageField(upload_to="restaurant_images/", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     genre = models.ManyToManyField(Genre)
