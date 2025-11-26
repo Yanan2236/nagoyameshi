@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from base.mixins import SubscriptionRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.views.generic import CreateView, UpdateView, DeleteView
@@ -6,7 +7,7 @@ from django.views.generic import CreateView, UpdateView, DeleteView
 from base.models import Restaurant, Review
 
 
-class RestaurantReviewCreateView(LoginRequiredMixin, CreateView):
+class RestaurantReviewCreateView(SubscriptionRequiredMixin, CreateView):
     model = Review
     fields = ["rating", "comment"]
     template_name = "base/review/review_form.html"
@@ -30,7 +31,7 @@ class RestaurantReviewCreateView(LoginRequiredMixin, CreateView):
         return context
 
 
-class RestaurantReviewUpdateView(LoginRequiredMixin, UpdateView):
+class RestaurantReviewUpdateView(SubscriptionRequiredMixin, UpdateView):
     model = Review
     pk_url_kwarg = "review_pk"
     fields = ["rating", "comment"]
@@ -44,7 +45,7 @@ class RestaurantReviewUpdateView(LoginRequiredMixin, UpdateView):
         return reverse("restaurant_detail", kwargs={"pk": self.object.restaurant.pk})
     
 
-class RestaurantReviewDeleteView(LoginRequiredMixin, DeleteView):
+class RestaurantReviewDeleteView(SubscriptionRequiredMixin, DeleteView):
     model = Review
     pk_url_kwarg = "review_pk"
     template_name = "base/review/review_delete.html"

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="subscription-container">
+    <h1>サブスクリプション登録</h1>
+
+    <p>300円の支払いが発生します</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn primary">
+            登録する
+        </button>
+    </form>
+</div>
+{% endblock %}

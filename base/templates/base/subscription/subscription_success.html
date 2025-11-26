@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="subscription-container">
+    <h1>登録が完了しました</h1>
+
+    <p>サブスクリプションの有効化が完了しました。</p>
+
+    <a href="{% url 'mypage' %}" class="btn primary">
+        マイページへ戻る
+    </a>
+</div>
+{% endblock %}

@@ -33,6 +33,31 @@
   </section>
 
   <section class="mypage-section">
+    <h3>サブスクリプション</h3>
+
+    {% if user.subscription.is_active %}
+    <p>現在サブスクリプションに登録しています。</p>
+    <p>有効期間: {{ user.subscription.started_at|date:"Y/m/d" }} - {{ user.subscription.ended_at|date:"Y/m/d" }}</p>
+    <a href="{% url 'subscription_cancel' %}" class="btn-danger">解約する</a>
+    {% else %}
+    <p>サブスクリプションに登録していません。</p>
+    <a href="{% url 'subscription_create' %}" class="btn primary">登録する</a>
+    {% endif %}
+  </section>
+
+  <section class="card-section">
+    <h3>カード情報</h3>
+
+    {% if user.billing and user.billing.default_payment_method_id %}
+    <p>カード情報が登録されています。</p>
+    <a href="{% url 'card_info' %}" class="btn-primary">カード情報を確認する</a>
+    {% else %}
+    <p>カード情報が登録されていません。</p>
+    <a href="{% url 'card_update' %}" class="btn-primary">カード情報を登録する</a>
+    {% endif %}
+  </section>
+
+  <section class="mypage-section">
     <h3>あなたのレビュー</h3>
 
     {% if my_reviews %}

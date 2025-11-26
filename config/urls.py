@@ -10,4 +10,6 @@ urlpatterns = [
     path("accounts/", include("allauth.urls")),
     path("mypage/", include("base.urls.mypage")),
     path("reviews/", include("base.urls.review")),
+    path("billing/", include("base.urls.billing")),
+    path("subscription/", include("base.urls.subscription")),
 ]

@@ -138,3 +138,14 @@ class Subscription(models.Model):
     @property
     def is_active(self) -> bool:
         return self.ended_at > timezone.now()
+    
+    
+class UserBilling(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="billing",)
+    stripe_customer_id = models.CharField(max_length=255, blank=True, null=True,)
+    default_payment_method_id = models.CharField(max_length=255, blank=True, null=True,)
+    card_brand = models.CharField(max_length=50, blank=True, null=True,)
+    card_last4 = models.CharField(max_length=4, blank=True, null=True,)
+    
+    def __str__(self):
+        return f"Billing info for {self.user}"

@@ -1,0 +1,32 @@
+.billing-container {
+  max-width: 480px;
+  margin: 40px auto 80px;
+  padding: 20px;
+}
+
+.card-element {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+  margin-bottom: 12px;
+}
+
+.card-errors {
+  color: #c33;
+  font-size: 0.85rem;
+  min-height: 1.2em;
+  margin-bottom: 16px;
+}
+
+.btn.primary {
+  background: #222;
+  color: #fff;
+  border-radius: 6px;
+  padding: 10px 16px;
+  display: inline-block;
+}
+
+.btn.primary:hover {
+  opacity: 0.85;
+}

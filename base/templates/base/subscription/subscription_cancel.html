@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pages/billing.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="billing-container">
+    <h1>サブスクリプションを解約しますか？</h1>
+    <p>解約すると、現在のサブスクリプションは即時終了します。</p>
+    <p>よろしければ下の「解約する」を押してください。</p>
+
+    <form method="post" class="cancel-form">
+        {% csrf_token %}
+        <button type="submit" class="btn danger">解約する</button>
+    </form>
+
+    <a href="{% url 'mypage' %}" class="btn secondary">戻る</a>
+</div>
+{% endblock %}

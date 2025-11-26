@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pages/billing.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="billing-container">
+  <h1>カード情報を更新しました</h1>
+  <p>今後の決済は新しいカードが利用されます。</p>
+
+  {% if not user.subscription %}
+  <a href="{% url 'subscription_create' %}" class="btn primary">サブスリプション登録へ進む</a>
+  {% endif %}
+  <a href="{% url 'mypage' %}" class="btn primary">マイページに戻る</a>
+</div>
+{% endblock %}
