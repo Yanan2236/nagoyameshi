@@ -1,0 +1,12 @@
+{% extends "components/feature_cta_base.html" %}
+
+{% block feature_cta %}
+
+{% if user_review %}
+    <a href="{{ action_update_url}}" class="btn btn-ghost">編集</a>
+    <a href="{{ action_delete_url }}"class="btn btn-danger">削除</a>
+{% else %}
+    <a href="{{ action_create_url }}" class="btn btn-primary">{{ action_label }}</a>
+{% endif %}
+
+{% endblock %}

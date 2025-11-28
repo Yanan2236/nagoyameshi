@@ -1,0 +1,36 @@
+<header class="site-header">
+<div class="container header-inner">
+    <h1 class="logo">
+    <a href="/">
+        <span>🍤</span> NAGOYAMESHI
+    </a>
+    </h1>
+
+    <nav class="main-nav">
+    <ul class="nav-list">
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+            <a href="{% url 'account_email' %}">
+            {{ user.email|default:user.username }} さん
+            </a>
+        </li>
+
+        <li class="nav-item"><a href="{% url 'mypage' %}">マイページ</a></li>
+
+        <li class="nav-item"><a href="{% url 'mypage' %}">お気に入り</a></li>
+
+        <li class="nav-item">
+            <a href="{% url 'account_logout' %}" class="btn-primary">ログアウト</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a href="{% url 'account_signup' %}">新規登録</a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'account_login' %}" class="btn-primary">ログイン</a>
+        </li>
+        {% endif %}
+    </ul>
+    </nav>
+</div>
+</header>

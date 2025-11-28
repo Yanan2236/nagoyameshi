@@ -3,6 +3,7 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/pages/billing.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/link_to_mypage.css' %}">
 {% endblock %}
 
 {% block main %}
@@ -29,8 +30,6 @@
     <a href="{% url 'card_update' %}" class="btn primary">カードを登録する</a>
   {% endif %}
 
-  <div class="back-links">
-    <a href="{% url 'mypage' %}" class="btn secondary">マイページに戻る</a>
-  </div>
+  {% include "components/link_to_mypage.html" %}
 </div>
 {% endblock %}

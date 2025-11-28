@@ -10,8 +10,15 @@
   <h2>マイページ</h2>
 
   <section class="mypage-section">
-    <h3>アカウント</h3>
-    <p>メール：{{ user.email }}</p>
+    <h3>ユーザー名</h3>
+    <p>{{ user.username }}</p>
+    <a href="{% url 'username_update' %}" class="btn primary">編集する</a>
+  </section>
+
+  <section class="mypage-section">
+    <h3>メール</h3>
+    <p>{{ user.email }}</p>
+    <a href="{% url 'account_email' %}" class="btn primary">編集する</a>
   </section>
 
   <section class="mypage-section">

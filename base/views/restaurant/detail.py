@@ -1,5 +1,5 @@
 from django.views.generic import DetailView
-from base.models import Restaurant, Favorite, Review
+from base.models import Restaurant, Favorite, Review, Reservation
     
 class RestaurantDetailView(DetailView):
     model = Restaurant
@@ -26,6 +26,14 @@ class RestaurantDetailView(DetailView):
             ).first()
         else:
             context["user_review"] = None
+            
+        if user.is_authenticated:
+            context["user_reservation"] = Reservation.objects.filter(
+                user=user,
+                restaurant=restaurant
+            ).exists()
+        else:
+            context["user_reservation"] = None
             
         context["genres"] = restaurant.genre.all()
         context["reviews"] = restaurant.reviews.select_related("user").all()

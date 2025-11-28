@@ -107,7 +107,8 @@ class Review(models.Model):
 class Reservation(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reservations')
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='reservations')
-    reserved_datetime = models.DateTimeField()
+    date = models.DateField()
+    time = models.TimeField()
     number_of_people = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

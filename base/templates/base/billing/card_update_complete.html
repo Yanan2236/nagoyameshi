@@ -3,6 +3,7 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/pages/billing.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/link_to_mypage.css' %}">
 {% endblock %}
 
 {% block main %}
@@ -13,6 +14,6 @@
   {% if not user.subscription %}
   <a href="{% url 'subscription_create' %}" class="btn primary">サブスリプション登録へ進む</a>
   {% endif %}
-  <a href="{% url 'mypage' %}" class="btn primary">マイページに戻る</a>
+  {% include "components/link_to_mypage.html" %}
 </div>
 {% endblock %}

@@ -85,33 +85,21 @@
 
     <div class="detail-divider"></div>
 
+    <div class="detail-reservation-header">
+        <h2>予約</h2>
+        {% url 'restaurant_reservation_create' as reserve_url %}
+        {% url 'restaurant_reservation_cancel' reservation_pk=user_reservation.pk as delete_url %}
+
+        {% include "components/review_cta.html" with action_create_url=reserve_url action_delete_url=delete_url action_label="予約をする" user_reservation=user_reservation %}
+    </div>
+
     <div class="detail-review-header">
         <h2>レビュー</h2>
+        {% url 'restaurant_review_update' review_pk=user_review.pk as update_url %}
+        {% url 'restaurant_review_delete' review_pk=user_review.pk as delete_url %}
+        {% url 'restaurant_review_create' pk=restaurant.pk as create_url %}
 
-        <div class="review-actions">
-            {% if user.is_authenticated %}
-                {% if user_review %}
-                    <a href="{% url 'restaurant_review_update' review_pk=user_review.pk %}"
-                       class="btn btn-ghost">
-                        レビューを編集
-                    </a>
-                    <a href="{% url 'restaurant_review_delete' review_pk=user_review.pk %}"
-                       class="btn btn-danger">
-                        レビューを削除
-                    </a>
-                {% else %}
-                    <a href="{% url 'restaurant_review_create' pk=restaurant.pk %}"
-                       class="btn btn-primary">
-                        レビューを書く
-                    </a>
-                {% endif %}
-            {% else %}
-                <a href="{% url 'account_login' %}?next={{ request.path }}"
-                   class="btn btn-primary">
-                    ログインしてレビューを書く
-                </a>
-            {% endif %}
-        </div>
+        {% include "components/review_cta.html" with action_update_url=update_url action_delete_url=delete_url action_create_url=create_url action_label="レビューを書く" user_review=user_review %}
     </div>
 
     <div class="review-list">

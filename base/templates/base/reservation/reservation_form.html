@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="reservation-form">
+  <h1>予約を作成</h1>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit" class="btn primary">予約する</button>
+  </form>
+</div>
+{% endblock %}

@@ -12,4 +12,5 @@ urlpatterns = [
     path("reviews/", include("base.urls.review")),
     path("billing/", include("base.urls.billing")),
     path("subscription/", include("base.urls.subscription")),
+    path("reservations/", include ("base.urls.reservations")),
 ]
