@@ -1,29 +1,41 @@
-/* すべての要素と疑似要素の余白・パディングをリセット */
 *, *::before, *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* 画像は親幅に合わせて縮む */
 img {
     max-width: 100%;
     height: auto;
     display: block;
 }
 
-/* リンクの下線を消す（必要なら後で追加） */
 a {
     text-decoration: none;
     color: inherit;
+    transition: color 0.3s ease;
 }
 
-/* リスト記号を消す */
 ul, ol {
     list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
-/* デフォルトのフォント設定（必要なら後で上書き） */
 body {
-    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    color: var(--color-text-main);
+    background-color: var(--color-bg-body);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
 }

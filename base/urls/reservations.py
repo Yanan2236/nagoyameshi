@@ -3,6 +3,6 @@ from base.views.reservations.reservations import ReservationListView, Reservatio
 
 urlpatterns = [
     path("", ReservationListView.as_view(), name="restaurant_reservation_list"),
-    path("new/", ReservationCreateView.as_view(), name="restaurant_reservation_create"),
+    path("new/<int:restaurant_pk>/", ReservationCreateView.as_view(), name="restaurant_reservation_create"),
     path("<int:pk>/cancel/", ReservationCancelView.as_view(), name="restaurant_reservation_cancel"),
 ]

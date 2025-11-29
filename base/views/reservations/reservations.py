@@ -13,14 +13,14 @@ class ReservationCreateView(SubscriptionRequiredMixin, CreateView):
     form_class = ReservationForm
     template_name = "base/reservation/reservation_form.html"
     success_url = reverse_lazy("restaurant_reservation_list")
-'''   ここ修正中！
+
     def form_valid(self, form):
         form.instance.user = self.request.user
-        restaurant_id = self.request.GET.get("restaurant")
-        restaurant = get_object_or_404(Restaurant, pk=restaurant_id)
+        restaurant_pk = self.kwargs["restaurant_pk"]
+        restaurant = get_object_or_404(Restaurant, pk=restaurant_pk)
         form.instance.restaurant = restaurant
         return super().form_valid(form)
-'''
+
 
 class ReservationListView(LoginRequiredMixin, ListView):
     model = Reservation
@@ -34,7 +34,7 @@ class ReservationListView(LoginRequiredMixin, ListView):
 class ReservationCancelView(LoginRequiredMixin, DeleteView):
     model = Reservation
     template_name = "base/reservation/reservation_cancel.html"
-    success_url = reverse_lazy("reservation_list")
+    success_url = reverse_lazy("restaurant_reservation_list")
     context_object_name = "reservation"
     
     def get_queryset(self):

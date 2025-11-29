@@ -16,7 +16,7 @@ class RestaurantReviewCreateView(SubscriptionRequiredMixin, CreateView):
     def dispatch(self, request, *args, **kwargs):
         self.restaurant = get_object_or_404(Restaurant, pk=kwargs["pk"])
         return super().dispatch(request, *args, **kwargs)
-
+    
     def form_valid(self, form):
         form.instance.user = self.request.user
         form.instance.restaurant = self.restaurant
@@ -40,6 +40,13 @@ class RestaurantReviewUpdateView(SubscriptionRequiredMixin, UpdateView):
 
     def get_queryset(self):
         return Review.objects.filter(user=self.request.user)
+    
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["restaurant"] = self.object.restaurant
+        context["user_review"] = self.object
+        return context
 
     def get_success_url(self):
         return reverse("restaurant_detail", kwargs={"pk": self.object.restaurant.pk})

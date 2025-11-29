@@ -22,6 +22,35 @@
   </section>
 
   <section class="mypage-section">
+    <h3>予約一覧</h3>
+
+    {% if my_reservations %}
+      <ul class="reservation-list">
+        {% for r in my_reservations %}
+          <li class="reservation-item">
+            <a href="{% url 'restaurant_detail' pk=r.restaurant.pk %}">
+              {{ r.restaurant.name }}
+            </a>
+            <span class="reservation-meta">
+              （{{ r.date|date:"Y/m/d" }} {{ r.time|time:"H:i" }} /
+              {{ r.number_of_people }}名）
+            </span>
+
+            <div class="reservation-actions">
+              <a href="{% url 'restaurant_reservation_cancel' pk=r.pk %}"
+                 class="btn-danger">
+                予約をキャンセルする
+              </a>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>現在、予約はありません。</p>
+    {% endif %}
+  </section>
+
+  <section class="mypage-section">
     <h3>お気に入り</h3>
 
     {% if favorite_restaurants %}
@@ -48,7 +77,7 @@
     <a href="{% url 'subscription_cancel' %}" class="btn-danger">解約する</a>
     {% else %}
     <p>サブスクリプションに登録していません。</p>
-    <a href="{% url 'subscription_create' %}" class="btn primary">登録する</a>
+    <a href="{% url 'subscription_create' %}" class="btn-primary">登録する</a>
     {% endif %}
   </section>
 

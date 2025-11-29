@@ -10,14 +10,10 @@
     <ul class="nav-list">
         {% if user.is_authenticated %}
         <li class="nav-item">
-            <a href="{% url 'account_email' %}">
-            {{ user.email|default:user.username }} さん
-            </a>
+            {{ user.username }} さん
         </li>
 
         <li class="nav-item"><a href="{% url 'mypage' %}">マイページ</a></li>
-
-        <li class="nav-item"><a href="{% url 'mypage' %}">お気に入り</a></li>
 
         <li class="nav-item">
             <a href="{% url 'account_logout' %}" class="btn-primary">ログアウト</a>

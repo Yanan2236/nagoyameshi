@@ -10,7 +10,7 @@
         <li>
           <strong>{{ r.date }}{{ r.time }}</strong>
           {{ r.restaurant }}:{{ r.number_of_people }}
-          | <a href="{% url 'reservation_cancel' r.pk %}">キャンセル</a>
+          | <a href="{% url 'restaurant_reservation_cancel' r.pk %}">キャンセル</a>
         </li>
       {% endfor %}
     </ul>

@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
-from base.models import Favorite, Review
+from base.models import Favorite, Review, Reservation
 
 class MyPageView(LoginRequiredMixin, TemplateView):
     template_name = "base/mypage/index.html"
@@ -8,6 +8,13 @@ class MyPageView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        
+        context["my_reservations"] = (
+            Reservation.objects
+            .filter(user=self.request.user)
+            .select_related("restaurant")
+            .order_by("date", "time")
+        )
         
         # favorite
         context["favorite_restaurants"] = (

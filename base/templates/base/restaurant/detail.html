@@ -87,10 +87,10 @@
 
     <div class="detail-reservation-header">
         <h2>予約</h2>
-        {% url 'restaurant_reservation_create' as reserve_url %}
+        {% url 'restaurant_reservation_create' restaurant_pk=restaurant.pk as reserve_url %}
         {% url 'restaurant_reservation_cancel' reservation_pk=user_reservation.pk as delete_url %}
 
-        {% include "components/review_cta.html" with action_create_url=reserve_url action_delete_url=delete_url action_label="予約をする" user_reservation=user_reservation %}
+        {% include "components/reservation_cta.html" with action_create_url=reserve_url action_delete_url=delete_url action_label="予約をする" user_reservation=user_reservation %}
     </div>
 
     <div class="detail-review-header">
@@ -107,7 +107,7 @@
             <article class="review-item">
                 <header class="review-header">
                     <strong class="review-user">
-                        {{ review.user.username|default:review.user.email }}
+                        {{ review.user.username }}
                     </strong>
                     <span class="review-rating">
                         {{ review.rating }} / 5

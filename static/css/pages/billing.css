@@ -18,15 +18,3 @@
   min-height: 1.2em;
   margin-bottom: 16px;
 }
-
-.btn.primary {
-  background: #222;
-  color: #fff;
-  border-radius: 6px;
-  padding: 10px 16px;
-  display: inline-block;
-}
-
-.btn.primary:hover {
-  opacity: 0.85;
-}
