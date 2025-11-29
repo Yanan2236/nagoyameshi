@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/components/link_to_mypage.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="subscription-container">
+    <h1>登録が完了しました</h1>
+
+    <p>サブスクリプションの有効化が完了しました。</p>
+
+    {% include "components/link_to_mypage.html" %}
+</div>
+{% endblock %}

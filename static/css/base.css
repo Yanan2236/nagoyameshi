@@ -1,0 +1,136 @@
+/* =========================================
+   Nagoya Meshi Premium Theme
+   ========================================= */
+
+:root {
+    /* Color Palette - Nagoya Miso & Gold Inspiration */
+    --color-primary: #D9534F;
+    /* Deep Red/Orange (Miso-like) */
+    --color-primary-dark: #C9302C;
+    --color-secondary: #F0AD4E;
+    /* Gold/Fried food */
+    --color-accent: #5BC0DE;
+    /* Fresh accent */
+    --color-text-main: #333333;
+    --color-text-sub: #666666;
+    --color-bg-body: #F9F9F9;
+    --color-bg-white: #FFFFFF;
+    --color-border: #E0E0E0;
+
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 40px;
+
+    /* Typography */
+    --font-family-base: "Noto Sans JP", sans-serif;
+    --font-size-base: 16px;
+}
+
+/* =========================================
+   Layout Utilities
+   ========================================= */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+main {
+    flex: 1;
+    padding: var(--spacing-xl) 0;
+}
+
+/* =========================================
+   Header
+   ========================================= */
+.site-header {
+    background-color: var(--color-bg-white);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+}
+
+.logo a {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+/* Search Bar in Header */
+.header-search {
+    flex: 1;
+    max-width: 400px;
+    margin: 0 var(--spacing-lg);
+    position: relative;
+}
+
+.header-search input {
+    width: 100%;
+    padding: 10px 16px;
+    border: 1px solid var(--color-border);
+    border-radius: 50px;
+    background-color: #f5f5f5;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.header-search input:focus {
+    outline: none;
+    background-color: var(--color-bg-white);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(217, 83, 79, 0.1);
+}
+
+/* Navigation */
+.nav-list {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: center;
+}
+
+.nav-item a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-sub);
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+.nav-item a:hover {
+    color: var(--color-primary);
+    background-color: rgba(217, 83, 79, 0.05);
+}
+
+/* =========================================
+   Responsive
+   ========================================= */
+@media (max-width: 768px) {
+    .header-search {
+        display: none;
+        /* Hide search on mobile for now or move it */
+    }
+
+    .nav-list {
+        gap: var(--spacing-sm);
+    }
+
+    .nav-item span {
+        display: none;
+        /* Hide text labels on mobile if using icons */
+    }
+}

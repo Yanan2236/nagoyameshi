@@ -1,0 +1,21 @@
+.link_to_mypage::before {
+    content: "←";
+    margin-right: 4px;
+    color: inherit;
+}
+
+.link_to_mypage {
+    display: inline-block;
+    color: rgb(99, 99, 99);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 1.2;
+    padding: 0 12px;
+    margin: 12px 0;
+}
+
+.link_to_mypage:hover {
+    color: black;
+    box-shadow: underline;
+}

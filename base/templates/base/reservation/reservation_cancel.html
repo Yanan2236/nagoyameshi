@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="reservation-cancel">
+  <h1>予約キャンセル</h1>
+
+  <p>
+    以下の予約を本当にキャンセルしますか？  
+  </p>
+
+  <p>
+    <strong>{{ reservation.date }}{{ reservation.time}}</strong><br>
+    {{ reservation.restaurant }}
+  </p>
+
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn danger">キャンセルする</button>
+    <a href="{% url 'restaurant_reservation_list' %}" class="btn">戻る</a>
+  </form>
+</div>
+{% endblock %}

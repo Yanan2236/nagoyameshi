@@ -1,0 +1,19 @@
+{% load subscription_tags %}
+
+<div class="review-actions">
+    {% if user.is_authenticated %}
+        {% if user|is_subscribed %}
+            {% block feature_cta %}{% endblock %}
+        {% else %}
+        <a href="{% url 'subscription_create' %}?next={{ request.get_full_path }}"
+            class="btn btn-primary">
+            サブスクリプションに登録して{{ action_label }}
+        </a>
+        {% endif %}
+    {% else %}
+        <a href="{% url 'account_login' %}?next={{ request.get_full_path }}"
+            class="btn btn-primary">
+            ログインして{{ action_label }}
+        </a>
+    {% endif %}
+</div>

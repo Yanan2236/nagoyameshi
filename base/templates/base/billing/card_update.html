@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pages/billing.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="billing-container">
+  <h1>カード情報</h1
+
+  <form id="card-form" method="post" action="{% url 'card_update_complete' %}">
+    {% csrf_token %}
+
+    <!-- Stripe Elements -->
+    <div id="card-element" class="card-element"></div>
+    <div id="card-errors" class="card-errors"></div>
+
+    <!-- Stripe の payment_method_id を受け取る hidden -->
+    <input type="hidden" name="payment_method_id" id="payment-method-id">
+
+    <button id="card-submit" type="submit" class="btn-primary">保存する</button>
+  </form>
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  // Stripe 初期化
+  const stripe = Stripe("{{ stripe_public_key }}");
+  const elements = stripe.elements();
+  const card = elements.create("card", { hidePostalCode: true });
+  card.mount("#card-element");
+
+  const form = document.querySelector("#card-form");
+  const errorEl = document.querySelector("#card-errors");
+  const submitBtn = document.querySelector("#card-submit");
+  const pmInput = document.querySelector("#payment-method-id");
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    errorEl.textContent = "";
+    submitBtn.disabled = true;
+
+    stripe
+      .confirmCardSetup(
+        "{{ client_secret }}",
+        { payment_method: { card: card } }
+      )
+      .then(function (result) {
+        if (result.error) {
+          // Stripe 側のバリデーションエラーなど
+          errorEl.textContent = result.error.message || "カード情報の登録に失敗しました。";
+          submitBtn.disabled = false;
+          return;
+        }
+
+        // 成功：pm_xxx を hidden にセットしてフォーム送信
+        pmInput.value = result.setupIntent.payment_method;
+        form.submit();
+      })
+      .catch(function () {
+        // 通信レベルのエラーなど
+        errorEl.textContent = "通信エラーが発生しました。時間をおいて再度お試しください。";
+        submitBtn.disabled = false;
+      });
+  });
+</script>
+
+{% endblock %}
+

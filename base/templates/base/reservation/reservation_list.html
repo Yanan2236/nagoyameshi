@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="reservation-list">
+  <h1>予約一覧</h1>
+
+  {% if reservations %}
+    <ul>
+      {% for r in reservations %}
+        <li>
+          <strong>{{ r.date }}{{ r.time }}</strong>
+          {{ r.restaurant }}:{{ r.number_of_people }}
+          | <a href="{% url 'restaurant_reservation_cancel' r.pk %}">キャンセル</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>予約はありません。</p>
+  {% endif %}
+</div>
+{% endblock %}

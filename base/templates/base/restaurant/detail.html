@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ restaurant.name }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pages/detail.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="restaurant-detail">
+
+    <div class="detail-header">
+        <div class="detail-main">
+            <h1 class="restaurant-name">{{ restaurant.name }}</h1>
+
+            <p class="restaurant-meta">
+                <span class="meta-ward">
+                    {{ restaurant.get_ward_display }}
+                </span>
+                {% if restaurant.sub_area %}
+                    <span class="meta-separator">/</span>
+                    <span class="meta-subarea">
+                        {{ restaurant.sub_area.name }}
+                    </span>
+                {% endif %}
+            </p>
+
+            {% if restaurant.address %}
+                <p class="restaurant-address">
+                    {{ restaurant.address }}
+                </p>
+            {% endif %}
+
+            {% if restaurant.phone_number %}
+                <p class="restaurant-phone">
+                    TEL: {{ restaurant.phone_number }}
+                </p>
+            {% endif %}
+
+            {% if genres %}
+                <ul class="genre-list">
+                    {% for g in genres %}
+                        <li class="genre-pill">{{ g.name }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <div class="favorite-block">
+                {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'toggle_favorite' restaurant.pk %}">
+                        {% csrf_token %}
+                        {% if is_favorited %}
+                            <button type="submit" class="btn btn-ghost">
+                                ★ お気に入り解除
+                            </button>
+                        {% else %}
+                            <button type="submit" class="btn btn-primary">
+                                ☆ お気に入りに追加
+                            </button>
+                        {% endif %}
+                    </form>
+                {% else %}
+                    <a href="{% url 'account_login' %}?next={{ request.path }}"
+                       class="btn btn-primary">
+                        ログインしてお気に入り登録
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if restaurant.image %}
+            <div class="restaurant-image">
+                <img src="{{ restaurant.image.url }}"
+                     alt="{{ restaurant.name }}">
+            </div>
+        {% endif %}
+    </div>
+
+    {% if restaurant.description %}
+        <div class="restaurant-description">
+            {{ restaurant.description|linebreaksbr }}
+        </div>
+    {% endif %}
+
+    <div class="detail-divider"></div>
+
+    <div class="detail-reservation-header">
+        <h2>予約</h2>
+        {% url 'restaurant_reservation_create' restaurant_pk=restaurant.pk as reserve_url %}
+        {% url 'restaurant_reservation_cancel' reservation_pk=user_reservation.pk as delete_url %}
+
+        {% include "components/reservation_cta.html" with action_create_url=reserve_url action_delete_url=delete_url action_label="予約をする" user_reservation=user_reservation %}
+    </div>
+
+    <div class="detail-review-header">
+        <h2>レビュー</h2>
+        {% url 'restaurant_review_update' review_pk=user_review.pk as update_url %}
+        {% url 'restaurant_review_delete' review_pk=user_review.pk as delete_url %}
+        {% url 'restaurant_review_create' pk=restaurant.pk as create_url %}
+
+        {% include "components/review_cta.html" with action_update_url=update_url action_delete_url=delete_url action_create_url=create_url action_label="レビューを書く" user_review=user_review %}
+    </div>
+
+    <div class="review-list">
+        {% for review in reviews %}
+            <article class="review-item">
+                <header class="review-header">
+                    <strong class="review-user">
+                        {{ review.user.username }}
+                    </strong>
+                    <span class="review-rating">
+                        {{ review.rating }} / 5
+                    </span>
+                </header>
+                <p class="review-comment">
+                    {{ review.comment|linebreaksbr }}
+                </p>
+            </article>
+        {% empty %}
+            <p class="review-empty">レビューはまだありません。</p>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

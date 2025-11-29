@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/components/link_to_mypage.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="subscription-container">
+    <h1>サブスクリプション登録</h1>
+
+    <p>300円の支払いが発生します</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn-primary">
+            登録する
+        </button>
+    </form>
+</div>
+
+<a href="{{ request.GET.next }}" class="link_to_mypage">戻る</a> <!-- 安全なURLであることを確認したほうがいいかも。 -->
+
+{% include "components/link_to_mypage.html" %}
+
+{% endblock %}

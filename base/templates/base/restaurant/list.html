@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}レストラン一覧 | 食べログ風{% endblock %}
+
+{% block main %}
+<h2>レストラン一覧</h2>
+
+<div class="restaurant-list">
+    {% for restaurant in object_list %}
+        <div class="restaurant-item">
+            <h3>
+                <a href="{% url 'restaurant_detail' restaurant.pk %}">
+                    {{ restaurant.name }}
+                </a>
+            </h3>
+
+            <p>{{ restaurant.address }}</p>
+
+            <p class="rating">
+                評価: {{ restaurant.average_rating|default:"-" }} / 5
+            </p>
+        </div>
+    {% empty %}
+        <p>レストランがありません。</p>
+    {% endfor %}
+</div>
+{% endblock %}

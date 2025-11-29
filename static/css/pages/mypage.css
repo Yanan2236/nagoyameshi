@@ -1,0 +1,77 @@
+.mypage-container {
+    max-width: 800px;
+    margin: 40px auto 64px;
+    padding: 24px 20px 40px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.mypage-container h2 {
+    font-size: 1.6rem;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #e3e3e3;
+    padding-bottom: 8px;
+}
+
+.mypage-section h3 {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+}
+
+.mypage-section {
+    padding: 16px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.mypage-section:last-of-type {
+    border-bottom: none;
+}
+
+.mypage-section ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.mypage-section li+li {
+    margin-top: 8px;
+}
+
+.review-list {
+    margin-top: 8px;
+}
+
+.review-item {
+    padding: 12px 10px;
+    border: 1px solid #e6e6e6;
+    border-radius: 6px;
+    background-color: #fafafa;
+}
+
+.review-item a {
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.review-item span {
+    margin-left: 4px;
+    color: #666666;
+    font-size: 0.9rem;
+}
+
+.review-item p {
+    margin: 8px 0 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.review-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+}
+
+.review-actions a {
+    text-decoration: none;
+}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div class="review-container">
+    <h2 class="page-title">
+        {% if form.instance.pk %}
+            レビューを編集
+        {% else %}
+            レビューを書く
+        {% endif %}
+    </h2>
+
+    <div class="restaurant-info">
+        <h3>{{ restaurant.name }}</h3>
+        <p>{{ restaurant.short_description }}</p>
+    </div>
+
+    <form method="post" class="review-form">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="id_rating">評価（★1〜5）</label>
+            {{ form.rating }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_comment">コメント</label>
+            {{ form.comment }}
+        </div>
+
+        <button type="submit" class="btn-primary">
+            {% if form.instance.pk %}
+                更新する
+            {% else %}
+                投稿する
+            {% endif %}
+        </button>
+    </form>
+
+    <a href="{% url 'restaurant_detail' pk=restaurant.pk %}" class="btn-secondary">
+        ← 詳細ページに戻る
+    </a>
+</div>
+{% endblock %}

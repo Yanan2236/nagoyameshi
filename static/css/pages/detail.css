@@ -1,0 +1,161 @@
+.restaurant-detail {
+  max-width: 960px;
+  margin: 40px auto 72px;
+  padding: 0 24px;
+}
+
+.detail-header {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+  margin-bottom: 32px;
+}
+
+.detail-main {
+  flex: 1 1 0;
+}
+
+.restaurant-name {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.restaurant-meta {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+.meta-separator {
+  margin: 0 4px;
+}
+
+.restaurant-address,
+.restaurant-phone {
+  font-size: 0.95rem;
+  color: #444;
+  margin-bottom: 4px;
+}
+
+.genre-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0 16px;
+  padding: 0;
+  list-style: none;
+}
+
+.genre-pill {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  background: #f4f4f4;
+  color: #555;
+}
+
+.restaurant-image {
+  flex: 0 0 260px;
+}
+
+.restaurant-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.restaurant-description {
+  margin-bottom: 32px;
+  line-height: 1.8;
+  color: #333;
+}
+
+.detail-divider {
+  border-top: 1px solid #eee;
+  margin: 24px 0;
+}
+
+.favorite-block {
+  margin-top: 12px;
+}
+
+.detail-review-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.detail-review-header h2 {
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.review-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.review-list {
+  margin-top: 8px;
+}
+
+.review-item {
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 14px 16px;
+  background-color: #fafafa;
+  margin-bottom: 12px;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+
+.review-user {
+  font-size: 0.95rem;
+}
+
+.review-rating {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.review-comment {
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.review-empty {
+  font-size: 0.95rem;
+  color: #777;
+}
+
+@media (max-width: 768px) {
+  .restaurant-detail {
+    margin: 24px 16px 56px;
+    padding: 0;
+  }
+
+  .detail-header {
+    flex-direction: column-reverse;
+    gap: 20px;
+  }
+
+  .restaurant-image {
+    width: 100%;
+    max-width: 480px;
+  }
+
+  .detail-review-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

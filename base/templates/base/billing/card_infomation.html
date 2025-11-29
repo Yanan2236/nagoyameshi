@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pages/billing.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/link_to_mypage.css' %}">
+{% endblock %}
+
+{% block main %}
+<div class="billing-container">
+  <h1>登録カード情報</h1>
+
+  {% if user.billing and user.billing.default_payment_method_id %}
+    <div class="card-info">
+      <p>カードブランド：{{ user.billing.card_brand }}</p>
+      <p>下4桁：**** **** **** {{ user.billing.card_last4 }}</p>
+    </div>
+
+    <div class="billing-actions">
+      <a href="{% url 'card_update' %}" class="btn-primary">カード情報を変更する</a>
+
+      <form action="{% url 'card_delete' %}" method="post" class="delete-form">
+        {% csrf_token %}
+        <button type="submit" class="btn-primary">カードを削除する</button>
+      </form>
+    </div>
+
+  {% else %}
+    <p>登録されたカードはありません。</p>
+    <a href="{% url 'card_update' %}" class="btn-primary">カードを登録する</a>
+  {% endif %}
+
+  {% include "components/link_to_mypage.html" %}
+</div>
+{% endblock %}
