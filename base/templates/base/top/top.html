@@ -13,7 +13,6 @@
     {% if restaurants %}
         <ul class="results-list">
             {% for restaurant in restaurants %}
-                {% include 'components/restaurant_card.html' with restaurant=restaurant %}
             {% endfor %}
         </ul>
     {% else %}

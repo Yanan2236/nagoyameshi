@@ -1,7 +1,7 @@
 <div class=search-form>
-    <form action="{% url 'api_restaurants' %}" method="get">
+    <form>
         {{ form.spot }}
         {{ form.genre }}
-        <button type="submit">検索</button>
+        {{ form.restaurant_name }}
     </form>
 </div>

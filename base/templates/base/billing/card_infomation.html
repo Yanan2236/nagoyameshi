@@ -17,17 +17,17 @@
     </div>
 
     <div class="billing-actions">
-      <a href="{% url 'card_update' %}" class="btn primary">カード情報を変更する</a>
+      <a href="{% url 'card_update' %}" class="btn-primary">カード情報を変更する</a>
 
       <form action="{% url 'card_delete' %}" method="post" class="delete-form">
         {% csrf_token %}
-        <button type="submit" class="btn primary">カードを削除する</button>
+        <button type="submit" class="btn-primary">カードを削除する</button>
       </form>
     </div>
 
   {% else %}
     <p>登録されたカードはありません。</p>
-    <a href="{% url 'card_update' %}" class="btn primary">カードを登録する</a>
+    <a href="{% url 'card_update' %}" class="btn-primary">カードを登録する</a>
   {% endif %}
 
   {% include "components/link_to_mypage.html" %}

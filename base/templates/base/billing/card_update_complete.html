@@ -12,7 +12,7 @@
   <p>今後の決済は新しいカードが利用されます。</p>
 
   {% if not user.subscription %}
-  <a href="{% url 'subscription_create' %}" class="btn primary">サブスリプション登録へ進む</a>
+  <a href="{% url 'subscription_create' %}" class="btn-primary">サブスリプション登録へ進む</a>
   {% endif %}
   {% include "components/link_to_mypage.html" %}
 </div>

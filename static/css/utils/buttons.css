@@ -11,11 +11,14 @@
 }
 
 .btn-primary {
-  background-color: #4a79c9;
+  background-color: #dee7f3;
+  color: #34567a;
+  border: 1px solid #c7d4e5; 
 }
 
 .btn-primary:hover {
-  background-color: #3f68ad;
+  background-color: #d0dced;
+  border-color: #b8c7dc;
 }
 
 .btn-secondary {

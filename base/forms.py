@@ -6,14 +6,18 @@ class SearchForm(forms.Form):
     spot = forms.ModelChoiceField(
         queryset=Spot.objects.all(),
         required=False,
-        widget=forms.Select(attrs={"class": "search-select"})
+        widget=forms.Select(attrs={"class": "search-select search-field"})
     )
     genre = forms.ModelChoiceField(
         queryset=Genre.objects.all(),
         required=False,
-        widget=forms.Select(attrs={"class": "search-select"})
+        widget=forms.Select(attrs={"class": "search-select search-field"})
     )
-    
+    restaurant_name = forms.CharField(
+        max_length=100,
+        required=False,
+        widget=forms.TextInput(attrs={"class": "search-input search-field", "placeholder": "レストラン名"})
+    )
     
 class ReservationForm(forms.ModelForm):
     class Meta:

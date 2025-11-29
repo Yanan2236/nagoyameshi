@@ -5,6 +5,7 @@ from base.models import Restaurant, Spot, SpotSubArea
 def restaurant_list_api(request):
     spot_id = request.GET.get("spot")
     genre_id = request.GET.get("genre")
+    name = request.GET.get("restaurant_name")
     
     '''JOINで同時に持ってくる.別SQLでまとめて持ってきてから配る
     qs = Restaurant.objects.all()
@@ -24,6 +25,11 @@ def restaurant_list_api(request):
 
     if genre_id:        
         qs = qs.filter(genre__id=genre_id)
+        
+    if name:
+        qs = qs.filter(name__icontains=name)
+        
+    qs = qs.distinct()
 
     data = [
         {
