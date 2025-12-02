@@ -1,3 +1,10 @@
-Django-allauth
+AllauthとGmailとの連携
 
-Faker:
+VI テキストエディタAWS用 入れる
+
+AWSの EC2 VPC を勉強しとく
+SSH:TeraTermを入れる。
+
+VI fileの保存とか
+
+SQLAlchemy + FastAPI

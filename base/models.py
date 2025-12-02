@@ -3,33 +3,27 @@ from django.conf import settings
 from django.utils import timezone
 
 
-class Weekday(models.TextChoices):
-    MON = "mon", "Mon"
-    TUE = "tue", "Tue"
-    WED = "wed", "Wed"
-    THU = "thu", "Thu"
-    FRI = "fri", "Fri"
-    SAT = "sat", "Sat"
-    SUN = "sun", "Sun"
+class Ward(models.TextChoices): 
     
-
-class Ward(models.TextChoices):
+    MINATO    = "minato", "港区"
     CHIKUSA   = "chikusa", "千種区"
-    HIGASHI   = "higashi", "東区"
+    ATSUTA    = "atsuta", "熱田区"
+    NAKA      = "naka", "中区"
     KITA      = "kita", "北区"
+    HIGASHI   = "higashi", "東区"
     NISHI     = "nishi", "西区"
     NAKAMURA  = "nakamura", "中村区"
-    NAKA      = "naka", "中区"
+    '''
     SHOWA     = "showa", "昭和区"
     MIZUHO    = "mizuho", "瑞穂区"
-    ATSUTA    = "atsuta", "熱田区"
     NAKAGAWA  = "nakagawa", "中川区"
-    MINATO    = "minato", "港区"
     MINAMI    = "minami", "南区"
     MORIYAMA  = "moriyama", "守山区"
     MEITO     = "meito", "名東区"
     TEMPAKU   = "tempaku", "天白区"
     MIDORI    = "midori", "緑区"
+    '''
+    
     
     
 class Rating(models.IntegerChoices):
@@ -69,7 +63,7 @@ class SpotSubArea(models.Model):
         return f"{self.name}（{self.get_ward_display()}）"
 
 
-class Restaurant(models.Model):
+class Restaurant(models.Model):  
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     ward = models.CharField(max_length=20, choices=Ward.choices)
@@ -80,17 +74,38 @@ class Restaurant(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     genre = models.ManyToManyField(Genre)
+    
+    min_party_size = models.PositiveSmallIntegerField(default=1)
+    max_party_size = models.PositiveSmallIntegerField(default=4)
 
     def __str__(self):
         return self.name
     
     
 class OpeningHour(models.Model):
+    class Weekday(models.TextChoices):
+        MON = "mon", "Mon"
+        TUE = "tue", "Tue"
+        WED = "wed", "Wed"
+        THU = "thu", "Thu"
+        FRI = "fri", "Fri"
+        SAT = "sat", "Sat"
+        SUN = "sun", "Sun"
+        
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name="opening_hours")
-    weekday = models.IntegerField(choices=Weekday.choices)
+    weekday = models.TextField(choices=Weekday.choices)
     open_time = models.TimeField()
     close_time = models.TimeField()
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["restaurant", "weekday", "open_time", "close_time"],
+                name="unique_openinghour_slot")
+        ]
+        
+    def __str__(self):
+        return f"{self.get_weekday_display()} {self.open_time}〜{self.close_time}"
     
 class Review(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviews')
@@ -107,8 +122,7 @@ class Review(models.Model):
 class Reservation(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reservations')
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='reservations')
-    date = models.DateField()
-    time = models.TimeField()
+    reserved_datetime = models.DateTimeField(null=True, blank=True)
     number_of_people = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

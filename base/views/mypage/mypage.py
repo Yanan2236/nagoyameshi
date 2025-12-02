@@ -13,7 +13,7 @@ class MyPageView(LoginRequiredMixin, TemplateView):
             Reservation.objects
             .filter(user=self.request.user)
             .select_related("restaurant")
-            .order_by("date", "time")
+            .order_by("reserved_datetime")
         )
         
         # favorite

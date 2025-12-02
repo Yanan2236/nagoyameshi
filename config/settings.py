@@ -17,6 +17,7 @@ ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
 
 STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY")
 STRIPE_PUBLIC_KEY = env("STRIPE_PUBLIC_KEY")
+STRIPE_SUBSCRIPTION_PRICE_ID = env("STRIPE_SUBSCRIPTION_PRICE_ID")
 
 
 # Application definition
@@ -61,7 +62,17 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = "/"
 ACCOUNT_SIGNUP_REDIRECT_URL = "/"
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = env("EMAIL_BACKEND")
+
+EMAIL_HOST = env("EMAIL_HOST")
+EMAIL_PORT = env.int("EMAIL_PORT")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS")
+
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
+ACCOUNT_DEFAULT_FROM_EMAIL = DEFAULT_FROM_EMAIL
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 ROOT_URLCONF = 'config.urls'
 
@@ -136,3 +147,6 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
