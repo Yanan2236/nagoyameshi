@@ -83,17 +83,17 @@ class Restaurant(models.Model):
     
     
 class OpeningHour(models.Model):
-    class Weekday(models.TextChoices):
-        MON = "mon", "Mon"
-        TUE = "tue", "Tue"
-        WED = "wed", "Wed"
-        THU = "thu", "Thu"
-        FRI = "fri", "Fri"
-        SAT = "sat", "Sat"
-        SUN = "sun", "Sun"
+    class Weekday(models.IntegerChoices):
+        MON = 0, "月"
+        TUE = 1, "火"
+        WED = 2, "水"
+        THU = 3, "木"
+        FRI = 4, "金"
+        SAT = 5, "土"
+        SUN = 6, "日"
         
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name="opening_hours")
-    weekday = models.TextField(choices=Weekday.choices)
+    weekday = models.PositiveSmallIntegerField(choices=Weekday.choices)
     open_time = models.TimeField()
     close_time = models.TimeField()
 

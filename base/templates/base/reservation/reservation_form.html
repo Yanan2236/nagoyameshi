@@ -1,14 +1,59 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pages/reservation.css' %}">
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/pages/reservation.js' %}"></script>
+{% endblock %}
 
 {% block main %}
-<div class="reservation-form">
-  <h1>予約を作成</h1>
+<section class="reservation-page">
+  <header class="reservation-header">
+    <h1 class="reservation-title">予約を作成</h1>
+    {% if restaurant %}
+      <p class="reservation-subtitle">{{ restaurant.name }} のご予約</p>
+    {% endif %}
+  </header>
 
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
+  <div class="reservation-card">
+    {% if form.non_field_errors %}
+      <div class="form-errors">
+        {{ form.non_field_errors }}
+      </div>
+    {% endif %}
 
-    <button type="submit" class="btn-primary">予約する</button>
-  </form>
-</div>
+    <form method="post" class="reservation-form">
+      {% csrf_token %}
+
+      <div class="form-grid">
+        <div class="form-field">
+          <label for="{{ form.number_of_people.id_for_label }}">人数</label>
+          {{ form.number_of_people }}
+          {{ form.number_of_people.errors }}
+        </div>
+
+        <div class="form-field">
+          <label for="{{ form.date.id_for_label }}">日付</label>
+          {{ form.date }}
+          {{ form.date.errors }}
+        </div>
+
+        <div class="form-field">
+          <label for="{{ form.time.id_for_label }}">時間</label>
+          {{ form.time }}
+          {{ form.time.errors }}
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">
+          予約する
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
 {% endblock %}

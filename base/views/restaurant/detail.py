@@ -1,5 +1,5 @@
 from django.views.generic import DetailView
-from base.models import Restaurant, Favorite, Review, Reservation
+from base.models import Restaurant, Favorite, Review, Reservation, OpeningHour
     
 class RestaurantDetailView(DetailView):
     model = Restaurant
@@ -34,6 +34,33 @@ class RestaurantDetailView(DetailView):
             ).exists()
         else:
             context["user_reservation"] = None
+            
+        hours = (restaurant.opening_hours.all().order_by("weekday", "open_time"))
+        weekday_to_slots = {}
+        for h in hours: 
+            weekday_to_slots.setdefault(h.weekday, []).append((h.open_time.strftime("%H:%M"), h.close_time.strftime("%H:%M")))
+        grouped = {}
+        for weekday, slots in weekday_to_slots.items():
+            key = tuple(slots)
+            grouped.setdefault(key, []).append(weekday)
+        display_groups = []
+        for slots, days in grouped.items():
+            day_labels = [OpeningHour.Weekday(day).label for day in days]
+            display_groups.append({
+                "days": day_labels,
+                "slots": slots,
+            })
+        all_days = {choice.value for choice in OpeningHour.Weekday}
+        closed_days = sorted(all_days - set(weekday_to_slots.keys()))
+        if not closed_days:
+            closed_display = "定休日無し"
+        else:
+            closed_display = "・".join(
+                OpeningHour.Weekday(day).label for day in closed_days
+            )
+        context["opening_groups"] = display_groups
+        context["closed_display"] = closed_display
+        
             
         context["genres"] = restaurant.genre.all()
         context["reviews"] = restaurant.reviews.select_related("user").all()

@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="{% static 'css/components/footer.css' %}">
 
     {% block extra_css %}{% endblock %}
+    {% block extra_js %}{% endblock %}
 </head>
 
 <body>
@@ -45,8 +46,6 @@
             {% endblock %}
         </div>
     </main>
-
-    {% block extra_js %}{% endblock %}
 
     <!-- ====== フッター ====== -->
     {% include "components/footer.html" %}

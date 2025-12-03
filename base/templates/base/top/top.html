@@ -5,6 +5,10 @@
 <link rel="stylesheet" href="{% static 'css/components/restaurant_card.css' %}">
 {% endblock %}
 
+{% block extra_js %}
+<script src="{% static 'js/components/search_form.js' %}" defer></script>
+{% endblock %}
+
 {% block main %}
 
 {% include 'components/search_form.html' %}
@@ -20,8 +24,4 @@
     {% endif %}
 </div>
 
-{% endblock %}
-
-{% block extra_js %}
-<script src="{% static 'js/components/search_form.js' %}"></script>
 {% endblock %}

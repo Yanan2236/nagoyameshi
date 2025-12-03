@@ -83,6 +83,30 @@
         </div>
     {% endif %}
 
+    {% if opening_groups %}
+        <div class="detail-opening-hours">
+            <h2>営業時間</h2>
+
+            {% for group in opening_groups %}
+                <div class="opening-group">
+                    <p class="opening-days">
+                        {{ group.days|join:"・" }}
+                    </p>
+                    {% for slot in group.slots %}
+                        <p class="opening-time">
+                            {{ slot.0 }} - {{ slot.1 }}
+                        </p>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            <div class="opening-closed">
+                <p>■ 定休日</p>
+                <p>{{ closed_display }}</p>
+            </div>
+        </div>
+    {% endif %}
+
     <div class="detail-divider"></div>
 
     <div class="detail-reservation-header">
