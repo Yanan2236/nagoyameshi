@@ -28,3 +28,33 @@ staticfiles/
 # === System / OS ===
 .DS_Store
 Thumbs.db
+
+
+# === Frontend / Node ===
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+
+# Package manager caches
+frontend/.npm/
+frontend/.yarn/
+frontend/.pnpm-store/
+
+# Vite / tooling artifacts
+frontend/.vite/
+frontend/.eslintcache
+frontend/.parcel-cache/
+
+# Lock files (backup/ghost copies — keep real lock file tracked)
+frontend/package-lock.json.*
+frontend/yarn.lock.*
+frontend/pnpm-lock.yaml.*
+
+# Dev environment settings (local only)
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.production.local
+
+# Misc artifacts
+frontend/.cache/
+frontend/.DS_Store
