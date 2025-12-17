@@ -43,22 +43,19 @@ class Command(BaseCommand):
             )
             return
 
-        # 1枚だけ用意して全店舗で使い回す画像
         dummy_path = settings.MEDIA_ROOT / "restaurant_images" / "dummy.png"
 
         self.stdout.write(self.style.WARNING(f"{total}件のレストランを生成します…"))
 
         for _ in range(total):
             sub_area = random.choice(sub_areas)
-
-            # Restaurant.ward は SubArea に合わせる
             ward_value = sub_area.ward
 
-            # メインジャンルを1つ決めて店名に混ぜる
+
             main_genre = random.choice(genres)
-            owner_name = fake.last_name()  # 例: 山田
+            owner_name = fake.last_name()
             suffix = random.choice(["本店", "総本家", ""])
-            # 例: 「ひつまぶし 山田屋 本店」
+
             name = f"{main_genre.name} {owner_name}屋 {suffix}"
             
             templates = [
@@ -71,10 +68,6 @@ class Command(BaseCommand):
                 f"{main_genre.name}を看板メニューにした名古屋めし専門店です。" + random.choice(templates)
             )
 
-            # 住所の構造：
-            #  - Ward: 区名（フィールド ward）
-            #  - SubArea.name: 町名・丁目の頭
-            #  - address: 残り（○丁目△-□ だけ入れる）
             ban = random.randint(1, 20)
             go = random.randint(1, 30)
             address_tail = f"{ban}-{go}"
@@ -95,28 +88,21 @@ class Command(BaseCommand):
                 max_party_size=max_party,
             )
 
-            # 画像：1枚あれば全店舗同じ画像を付ける
             if dummy_path.exists():
                 with dummy_path.open("rb") as f:
                     restaurant.image.save(dummy_path.name, File(f), save=True)
 
-            # ジャンルは 1〜3 個ランダムに付与（店名に使ったジャンルも含める）
             k = random.randint(1, min(3, len(genres)))
             chosen_genres = random.sample(genres, k=k)
             if main_genre not in chosen_genres:
                 chosen_genres[0] = main_genre
             restaurant.genre.set(chosen_genres)
 
-            # 営業時間：全曜日 11–15, 17–22 の二部制をとりあえず入れておく
-            # 休みの数をランダム選択（0〜2日）
             holiday_count = random.randint(0, 2)
 
-            # Weekday.values は ['mon','tue',...]
-            # 重複なしで休日を抽出
             holidays = random.sample(list(OpeningHour.Weekday.values), k=holiday_count)
 
             for weekday_value in OpeningHour.Weekday.values:
-                # 休日ならスキップ
                 if weekday_value in holidays:
                     continue
 
