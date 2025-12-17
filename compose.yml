@@ -8,3 +8,18 @@ services:
       - "8001:8000"
     stdin_open: true
     tty: true
+    command: python manage.py runserver 0.0.0.0:8000
+
+  frontend:
+    build:
+      context: ./frontend  
+      dockerfile: Dockerfile.frontend
+    container_name: nagoyameshi_frontend
+    working_dir: /app
+    volumes:
+      - ./frontend:/app 
+    ports:
+      - "5173:5173"
+    stdin_open: true
+    tty: true
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0 --port 5173"

@@ -49,10 +49,11 @@ const renderCard = (restaurant) => {
     return `
     <li class="restaurant-card">
         <a href="/restaurants/${restaurant.id}/">        
-           <img src="${restaurant.image_url}" alt="${restaurant.name}">
+            <img src="${restaurant.image_url}" alt="${restaurant.name}">
             <div class="restaurant-info">
                 <h3>${restaurant.name}</h3>
-                <p>${restaurant.sub_area.name}</p>
+                <p>${restaurant.genre.map(g => g.name).join(', ')}</p>
+                <p>名古屋市 ${restaurant.ward} ${restaurant.sub_area ? restaurant.sub_area.name : ''}</p>
             </div>
         </a>
     </li>
