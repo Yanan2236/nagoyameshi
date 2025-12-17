@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.contrib.auth import get_user_model
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import Restaurant, OpeningHour, Genre, Review, Reservation, Favorite, Subscription, Spot, SpotSubArea
 
 
@@ -11,6 +13,9 @@ class RestaurantAdmin(admin.ModelAdmin):
     inlines = [OpeningHourInline]
     filter_horizontal = ("genre",)
     
+    search_fields = ("name", "address")
+    list_filter = ("genre", "ward")
+    
 
 class SpotSubAreaInline(admin.TabularInline):
     model = SpotSubArea
@@ -21,6 +26,19 @@ class SpotSubAreaInline(admin.TabularInline):
 
 class SpotAdmin(admin.ModelAdmin):
     inlines = [SpotSubAreaInline]
+    
+    
+User = get_user_model()
+try:
+    admin.site.unregister(User)
+except admin.sites.NotRegistered:
+    pass
+
+class UserAdmin(BaseUserAdmin):
+    list_display = ("email", "is_active",)
+    list_filter = ("is_active",)
+    search_fields = ("email", "username")
+    ordering = ("email",)
 
 
 admin.site.register(Genre)
@@ -31,3 +49,4 @@ admin.site.register(Review)
 admin.site.register(Reservation)
 admin.site.register(Favorite)
 admin.site.register(Subscription)
+admin.site.register(User, UserAdmin)
