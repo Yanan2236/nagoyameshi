@@ -9,9 +9,9 @@ env = environ.Env()
 ENV_FILE = os.environ.get("DJANGO_ENV", "dev")
 
 if ENV_FILE == "prod":
-    environ.Env.read_env(BASE_DIR / ".env.prod")
+    env.read_env(BASE_DIR / ".env.prod")
 else:
-    environ.Env.read_env(BASE_DIR / ".env.dev")
+    env.read_env(BASE_DIR / ".env.dev")
 
 SECRET_KEY = env("SECRET_KEY")
 
@@ -118,7 +118,7 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
