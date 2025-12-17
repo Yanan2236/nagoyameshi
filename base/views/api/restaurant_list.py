@@ -35,9 +35,11 @@ def restaurant_list_api(request):
         {
             "id": r.id,
             "name": r.name,
+            "ward": r.get_ward_display(),
             "address": r.address,
-            "sub_area": {"id": r.sub_area.id, "name": r.sub_area.name,},
+            "sub_area": {"id": r.sub_area.id, "name": r.sub_area.name,} if r.sub_area else None,
             "genre": [{"id": g.id, "name": g.name} for g in r.genre.all()],
+            "image_url": r.image.url if r.image else None,
         }
         for r in qs
     ]

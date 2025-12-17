@@ -10,7 +10,7 @@ __pycache__/
 *.env
 .env.*
 
-# Django media / static (collectstatic時に生成)
+# Django media / static
 media/
 staticfiles/
 
