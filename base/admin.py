@@ -33,11 +33,10 @@ try:
     admin.site.unregister(User)
 except admin.sites.NotRegistered:
     pass
-
 class UserAdmin(BaseUserAdmin):
-    list_display = ("email", "is_active",)
-    list_filter = ("is_active",)
-    search_fields = ("email", "username")
+    list_display = ("id", "email", "username", "is_active", "is_staff", "is_superuser")
+    list_filter = ("is_active", "is_staff", "is_superuser", "groups")
+    search_fields = ("email", "username", "first_name", "last_name")
     ordering = ("email",)
 
 
@@ -49,4 +48,4 @@ admin.site.register(Review)
 admin.site.register(Reservation)
 admin.site.register(Favorite)
 admin.site.register(Subscription)
-admin.site.register(User, UserAdmin)
+admin.site.register(User, BaseUserAdmin)
