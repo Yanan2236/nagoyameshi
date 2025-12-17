@@ -1,16 +1,20 @@
 from pathlib import Path
 import environ
+import os
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = environ.Env()
-environ.Env.read_env(BASE_DIR / '.env.dev')
 
-# SECURITY WARNING: keep the secret key used in production secret!
+ENV_FILE = os.environ.get("DJANGO_ENV", "dev")
+
+if ENV_FILE == "prod":
+    environ.Env.read_env(BASE_DIR / ".env.prod")
+else:
+    environ.Env.read_env(BASE_DIR / ".env.dev")
+
 SECRET_KEY = env("SECRET_KEY")
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG", default=False)
 
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
@@ -19,8 +23,6 @@ STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY")
 STRIPE_PUBLIC_KEY = env("STRIPE_PUBLIC_KEY")
 STRIPE_SUBSCRIPTION_PRICE_ID = env("STRIPE_SUBSCRIPTION_PRICE_ID")
 
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -56,7 +58,6 @@ SITE_ID = 1
 
 ACCOUNT_LOGIN_METHODS = {"email"}
 ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
-# 登録時に認証メールも必須にする場合は 'mandatory' に設定
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = "/"
@@ -94,9 +95,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -105,48 +103,24 @@ DATABASES = {
 }
 
 
-# Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.2/topics/i18n/
-
 LANGUAGE_CODE = 'ja'
-
 TIME_ZONE = 'Asia/Tokyo'
-
 USE_I18N = True
-
 USE_TZ = True
-  
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
 STATICFILES_DIRS = [BASE_DIR / 'static']
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
